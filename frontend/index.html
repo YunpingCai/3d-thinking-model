@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Thinking Model</title>
+  <link rel="/static/stylesheet" href="style.css">
+</head>
+<body>
+  <div class="controls">
+  <label>
+    When it comes to decide <strong>WHAT</strong> I need to do: <br>
+    <span class="slider-label-min">I am a <strong>Dreamy</strong> person</span>
+    <input type="range" id="sliderZ" min="0" max="10" step="0.1" value="5">
+    <span class="slider-label-max">I am a <strong>Realistic</strong> person</span>
+  </label>
+  <br><br>
+  
+  <label>
+    When it comes to <strong>HOW</strong> I am going to use my tool to achieve it: <br> 
+    <span class="slider-label-min">I am a <strong>Dreamy</strong> person</span>
+    <input type="range" id="sliderX" min="0" max="10" step="0.1" value="3">
+    <span class="slider-label-max">I am a <strong>Realistic</strong> person</span>
+  </label>
+  <br><br>
+
+  <label>
+    When it comes to asking myself <strong>WHY</strong> I want to do it: <br>
+    <span class="slider-label-min">I am a <strong>Dreamy</strong> person</span>
+    <input type="range" id="sliderY" min="0" max="10" step="0.1" value="5">
+    <span class="slider-label-max">I am a <strong>Realistic</strong> person</span>
+  </label><br>
+
+
+  <button id="predictBtn">Predict</button>
+    <p id="output"></p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="/static/script.js"></script>
+</body>
+</html>
