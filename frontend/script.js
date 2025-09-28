@@ -151,10 +151,19 @@ window.addEventListener("mousemove", (event) => {
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 });
 
+// Support both local dev and production in one file
+const BACKEND_URL = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+  ? 'http://127.0.0.1:8000'   // dev backend
+  : '';                       // production (same origin)
+
+
 // Load considerations from backend CSV
 async function loadConsiderations() {
     try {
-        const response = await fetch("http://localhost:3000/api/brain-data"); // Backend endpoint serving CSV
+        const response = await fetch(`${BACKEND_URL}/api/brain-data`); // Backend endpoint serving CSV
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const csvText = await response.text();
 
         // Parse CSV using PapaParse
@@ -201,11 +210,16 @@ async function loadConsiderations() {
 // Predict consideration from backend
 async function predictConsideration(x, y, z) {
     try {
-        const response = await fetch("http://127.0.0.1:8000/predict", {
+        const response = await fetch(`${BACKEND_URL}/predict`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ x, y, z })
         });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
         console.log("Prediction response:", data);
 
