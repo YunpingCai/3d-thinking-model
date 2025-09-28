@@ -1,15 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, PlainTextResponse
 from pydantic import BaseModel
 import joblib
 import uvicorn
 import os
+import pandas as pd
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIR = os.path.join(BASE_DIR, "../frontend")
 MODEL_PATH = os.path.join(BASE_DIR, "model.pkl")
+CSV_PATH = os.path.join(BASE_DIR, "yunping_brain.csv")
 
 # Load trained ML model
 model = joblib.load(MODEL_PATH)
@@ -48,6 +50,13 @@ def predict(params: InputParams):
     return {"consideration": prediction}
 
 
+@app.get("/api/brain-data", response_class=PlainTextResponse)
+def brain_data():
+    """Serve brain data CSV"""
+    if not os.path.exists(CSV_PATH):
+        return "CSV file not found"
+    df = pd.read_csv(CSV_PATH)
+    return df.to_csv(index=False)
 
 
 if __name__ == "__main__":
